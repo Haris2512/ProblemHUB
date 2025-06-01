@@ -1,0 +1,13 @@
+# Java
+*.class
+bin/
+*.jar
+*.war
+*.ear
+# IDE
+.idea/
+*.iml
+# Dependencies
+/target/
+# Build tools
+*.log
