@@ -27,6 +27,9 @@ dependencies {
     // Tambahkan JavaFX FXML jika diperlukan
     implementation 'org.openjfx:javafx-controls:21'
     implementation 'org.openjfx:javafx-fxml:21'
+    // Tambahkan dependency Lombok
+    compileOnly 'org.projectlombok:lombok:1.18.32'
+    annotationProcessor 'org.projectlombok:lombok:1.18.32'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
