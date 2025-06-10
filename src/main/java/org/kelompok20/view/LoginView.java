@@ -7,7 +7,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import org.kelompok20.controller.AuthController;
+import org.kelompok20.model.User; // Import kelas User
+
+import java.util.Optional;
+
 public class LoginView extends Application {
+
+    private AuthController authController = new AuthController(); // Instance AuthController
+
     @Override
     public void start(Stage primaryStage) {
         // Layout
@@ -17,7 +25,7 @@ public class LoginView extends Application {
         grid.setVgap(10);
 
         // Komponen
-        Label titleLabel = new Label("Login Pengaduan Masyarakat");
+        Label titleLabel = new Label("Login Sistem Pengaduan Masyarakat");
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         grid.add(titleLabel, 0, 0, 2, 1);
 
@@ -52,16 +60,69 @@ public class LoginView extends Application {
             if (username.isEmpty() || password.isEmpty()) {
                 showAlert("Error", "Username dan Password harus diisi!");
             } else {
-                showAlert("Info", "Login: " + username + ", Role: " + role);
-                // Nanti panggil AuthController
+                Optional<User> loggedInUser = authController.login(username, password, role);
+
+                if (loggedInUser.isPresent()) {
+                    primaryStage.close(); // Tutup jendela login
+
+                    if (role.equals("Admin")) {
+                        // Buka Admin Dashboard
+                        new AdminDashboardView(loggedInUser.get()).start(new Stage());
+                    } else if (role.equals("Warga")) {
+                        // Buka Warga Dashboard
+                        new WargaDashboardView(loggedInUser.get()).start(new Stage());
+                    }
+                } else {
+                    showAlert("Login Gagal", "Username, Password, atau Role tidak cocok!");
+                }
             }
         });
 
         // Action untuk register
-        registerButton.setOnAction(e -> showAlert("Info", "Fitur Register belum diimplementasikan."));
+        registerButton.setOnAction(e -> {
+            // Contoh implementasi registrasi sederhana
+            TextInputDialog dialog = new TextInputDialog();
+            dialog.setTitle("Registrasi Pengguna Baru");
+            dialog.setHeaderText("Masukkan detail untuk registrasi");
+            dialog.setContentText("Username:");
+
+            Optional<String> resultUsername = dialog.showAndWait();
+            if (resultUsername.isPresent() && !resultUsername.get().isEmpty()) {
+                PasswordField newPasswordField = new PasswordField();
+                newPasswordField.setPromptText("Password");
+
+                Dialog<String> passwordDialog = new Dialog<>();
+                passwordDialog.setTitle("Registrasi");
+                passwordDialog.setHeaderText("Masukkan password untuk " + resultUsername.get());
+                ButtonType registerButtonType = new ButtonType("Daftar", ButtonBar.ButtonData.OK_DONE);
+                passwordDialog.getDialogPane().getButtonTypes().addAll(registerButtonType, ButtonType.CANCEL);
+                passwordDialog.getDialogPane().setContent(newPasswordField);
+
+                passwordDialog.setResultConverter(dialogButton -> {
+                    if (dialogButton == registerButtonType) {
+                        return newPasswordField.getText();
+                    }
+                    return null;
+                });
+
+                Optional<String> resultPassword = passwordDialog.showAndWait();
+                resultPassword.ifPresent(newPassword -> {
+                    if (newPassword.isEmpty()) {
+                        showAlert("Error", "Password tidak boleh kosong!");
+                    } else {
+                        // Default role untuk registrasi adalah Warga
+                        if (authController.register(resultUsername.get(), newPassword, "Warga")) {
+                            showAlert("Sukses", "Registrasi berhasil! Silakan login.");
+                        } else {
+                            showAlert("Gagal", "Registrasi gagal! Username mungkin sudah ada.");
+                        }
+                    }
+                });
+            }
+        });
 
         // Scene dan Stage
-        Scene scene = new Scene(grid, 350, 220);
+        Scene scene = new Scene(grid, 380, 250); // Ukuran disesuaikan
         primaryStage.setScene(scene);
         primaryStage.setTitle("Sistem Pengaduan - Login");
         primaryStage.show();
@@ -73,9 +134,5 @@ public class LoginView extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
-    }
-
-    public static void main(String[] args) {
-        launch(args);
     }
 }

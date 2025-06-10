@@ -1,16 +1,19 @@
 package org.kelompok20;
 
+import javafx.application.Application;
+import javafx.stage.Stage;
 import org.kelompok20.view.LoginView;
-import org.kelompok20.view.WargaDashboardView;
-import org.kelompok20.view.AdminDashboardView;
-import org.kelompok20.view.FormPengaduanView;
 
-public class App {
-    public String getGreeting() {
-        return "Hello World!";
+public class App extends Application {
+    @Override
+    public void start(Stage primaryStage) {
+        // Memulai aplikasi dengan menampilkan LoginView
+        LoginView loginView = new LoginView();
+        loginView.start(primaryStage);
     }
 
     public static void main(String[] args) {
-        System.out.println(new App().getGreeting());
+        // Meluncurkan aplikasi JavaFX
+        launch(args);
     }
 }
