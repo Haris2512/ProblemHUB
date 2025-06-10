@@ -1,12 +1,15 @@
 package org.kelompok20.view;
+
 import javafx.application.Application;
-import javafx.collections.FXCollections;
+import javafx.collections.FXCollections; // Ditambahkan
 import javafx.geometry.Insets;
+import javafx.geometry.Pos; // Ditambahkan
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.beans.property.SimpleStringProperty; // Ditambahkan, meskipun tidak wajib, ini praktik yang baik
 
 public class WargaDashboardView extends Application {
     @Override
@@ -17,7 +20,7 @@ public class WargaDashboardView extends Application {
         Label titleLabel = new Label("Dashboard Warga");
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
         borderPane.setTop(titleLabel);
-        BorderPane.setAlignment(titleLabel, Pos.CENTER);
+        BorderPane.setAlignment(titleLabel, Pos.CENTER); // Pastikan Pos diimport
 
         TableView<String[]> table = new TableView<>();
         table.setItems(FXCollections.observableArrayList(
@@ -26,13 +29,13 @@ public class WargaDashboardView extends Application {
         ));
 
         TableColumn<String[], String> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue()[0]));
+        idCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[0]));
         TableColumn<String[], String> kategoriCol = new TableColumn<>("Kategori");
-        kategoriCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue()[1]));
+        kategoriCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[1]));
         TableColumn<String[], String> lokasiCol = new TableColumn<>("Lokasi");
-        lokasiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue()[2]));
+        lokasiCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[2]));
         TableColumn<String[], String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue()[3]));
+        statusCol.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue()[3]));
 
         table.getColumns().addAll(idCol, kategoriCol, lokasiCol, statusCol);
 
@@ -42,6 +45,7 @@ public class WargaDashboardView extends Application {
         Button newPengaduanButton = new Button("Buat Pengaduan Baru");
         Button logoutButton = new Button("Logout");
         buttonBox.getChildren().addAll(newPengaduanButton, logoutButton);
+        BorderPane.setAlignment(buttonBox, Pos.CENTER); // Pusatkan buttonBox
         borderPane.setBottom(buttonBox);
 
         newPengaduanButton.setOnAction(e -> new FormPengaduanView().start(new Stage()));

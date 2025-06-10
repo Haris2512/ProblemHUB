@@ -24,6 +24,9 @@ dependencies {
 
     // This dependency is used by the application.
     implementation libs.guava
+    // Tambahkan JavaFX FXML jika diperlukan
+    implementation 'org.openjfx:javafx-controls:21'
+    implementation 'org.openjfx:javafx-fxml:21'
 }
 
 // Apply a specific Java toolchain to ease working on different environments.
@@ -37,9 +40,9 @@ application {
     // Define the main class for the application.
     mainClass = 'org.kelompok20.App'
 }
-javafx{
+javafx {
     version = "21"
-    modules = ['javafx.controls']
+    modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
 tasks.named('test') {
     useJUnitPlatform()
