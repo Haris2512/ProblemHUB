@@ -114,7 +114,11 @@ public class LoginView extends Application {
                         if (authController.register(resultUsername.get(), newPassword, "Warga")) {
                             showAlert("Sukses", "Registrasi berhasil! Silakan login.");
                         } else {
+
+                            showAlert("Gagal", "Username sudah digunakan. Silakan pilih username lain.");
+
                             showAlert("Gagal", "Registrasi gagal! Username mungkin sudah ada.");
+
                         }
                     }
                 });
@@ -125,6 +129,10 @@ public class LoginView extends Application {
         Scene scene = new Scene(grid, 380, 250); // Ukuran disesuaikan
         primaryStage.setScene(scene);
         primaryStage.setTitle("Sistem Pengaduan - Login");
+
+        primaryStage.setResizable(false); // Nonaktifkan resize
+
+
         primaryStage.show();
     }
 
