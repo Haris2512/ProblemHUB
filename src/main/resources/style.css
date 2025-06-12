@@ -1,0 +1,106 @@
+    /* Styling umum untuk elemen root aplikasi */
+    .root {
+        -fx-font-family: "Segoe UI", sans-serif; /* Menggunakan font Segoe UI atau sans-serif generik */
+        -fx-background-color: #f4f4f4; /* Warna latar belakang abu-abu muda */
+    }
+
+    /* Styling untuk label judul di setiap tampilan */
+    .title-label {
+        -fx-font-size: 18px; /* Ukuran font lebih besar */
+        -fx-font-weight: bold; /* Font tebal */
+        -fx-text-fill: #333333; /* Warna teks gelap */
+        -fx-padding: 10px 0; /* Padding atas dan bawah */
+    }
+
+    /* Styling untuk semua tombol */
+    .button {
+        -fx-background-color: #4CAF50; /* Warna hijau */
+        -fx-text-fill: white; /* Warna teks putih */
+        -fx-font-weight: bold; /* Font tebal */
+        -fx-padding: 8px 15px; /* Padding di dalam tombol */
+        -fx-border-radius: 5px; /* Sudut membulat */
+        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
+        -fx-cursor: hand; /* Kursor berubah menjadi tangan saat di hover */
+    }
+
+    /* Efek hover untuk tombol */
+    .button:hover {
+        -fx-background-color: #45a049; /* Warna hijau lebih gelap saat di hover */
+    }
+
+    /* Styling khusus untuk tombol "Cancel" atau "Logout" */
+    .button-cancel {
+        -fx-background-color: #f44336; /* Warna merah */
+    }
+
+    /* Efek hover untuk tombol cancel */
+    .button-cancel:hover {
+        -fx-background-color: #da190b; /* Warna merah lebih gelap saat di hover */
+    }
+
+    /* Styling untuk TextField dan TextArea */
+    .text-field, .text-area {
+        -fx-background-color: white; /* Latar belakang putih */
+        -fx-border-color: #cccccc; /* Warna border abu-abu */
+        -fx-border-width: 1px; /* Lebar border 1px */
+        -fx-border-radius: 5px; /* Sudut membulat */
+        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
+        -fx-padding: 5px; /* Padding di dalam input */
+    }
+
+    .text-area {
+        -fx-wrap-text: true; /* Teks otomatis wrap dalam TextArea */
+    }
+
+    /* Styling untuk ComboBox */
+    .combo-box {
+        -fx-background-color: white; /* Latar belakang putih */
+        -fx-border-color: #cccccc; /* Warna border abu-abu */
+        -fx-border-width: 1px; /* Lebar border 1px */
+        -fx-border-radius: 5px; /* Sudut membulat */
+        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
+    }
+
+    /* Styling untuk TableView */
+    .table-view {
+        -fx-background-color: white; /* Latar belakang putih */
+        -fx-border-color: #cccccc; /* Warna border abu-abu */
+        -fx-border-width: 1px; /* Lebar border 1px */
+        -fx-border-radius: 5px; /* Sudut membulat */
+        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
+    }
+
+    /* Styling untuk latar belakang header kolom tabel */
+    .table-view .column-header-background {
+        -fx-background-color: #e0e0e0; /* Warna abu-abu terang */
+    }
+
+    /* Styling untuk teks di header kolom tabel */
+    .table-view .column-header {
+        -fx-font-weight: bold; /* Font tebal */
+    }
+
+    /* Styling untuk sel-sel dalam tabel */
+    .table-view .table-cell {
+        -fx-padding: 5px;
+    }
+
+    /* Styling khusus untuk panel dialog (popup) */
+    .dialog-pane {
+        -fx-background-color: #ffffff; /* Latar belakang putih */
+        -fx-border-color: #cccccc; /* Warna border abu-abu */
+        -fx-border-width: 1px;
+        -fx-padding: 15px;
+    }
+
+    /* Styling untuk panel header di dialog */
+    .dialog-pane .header-panel {
+        -fx-background-color: #e0e0e0;
+        -fx-padding: 10px;
+    }
+
+    /* Styling untuk konten di dialog */
+    .dialog-pane .content {
+        -fx-padding: 10px 0;
+    }
+    

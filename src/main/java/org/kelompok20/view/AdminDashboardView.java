@@ -33,9 +33,11 @@ public class AdminDashboardView extends Application {
         this.currentUser = user;
     }
 
-    // Default constructor diperlukan karena Application class memanggil konstruktor tanpa argumen
+    // Default constructor diperlukan karena Application class memanggil konstruktor
+    // tanpa argumen
     public AdminDashboardView() {
-        // Jika dipanggil tanpa argumen, asumsi tidak ada user yang login atau perlu di-handle secara berbeda
+        // Jika dipanggil tanpa argumen, asumsi tidak ada user yang login atau perlu
+        // di-handle secara berbeda
         // Ini mungkin terjadi jika main() dipanggil langsung
     }
 
@@ -51,7 +53,8 @@ public class AdminDashboardView extends Application {
         titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
 
         HBox filterBox = new HBox(10);
-        statusFilterCombo = new ComboBox<>(FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
+        statusFilterCombo = new ComboBox<>(
+                FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
         statusFilterCombo.setValue("Semua"); // Default selected value
         filterBox.getChildren().addAll(new Label("Filter Status:"), statusFilterCombo);
 
@@ -67,22 +70,28 @@ public class AdminDashboardView extends Application {
 
         // Definisi Kolom
         TableColumn<Pengaduan, Integer> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        idCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
 
         TableColumn<Pengaduan, String> kategoriCol = new TableColumn<>("Kategori");
-        kategoriCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
+        kategoriCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
 
         TableColumn<Pengaduan, String> lokasiCol = new TableColumn<>("Lokasi");
-        lokasiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
+        lokasiCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
 
         TableColumn<Pengaduan, String> deskripsiCol = new TableColumn<>("Deskripsi");
-        deskripsiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
+        deskripsiCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
 
         TableColumn<Pengaduan, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
+        statusCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
 
         TableColumn<Pengaduan, String> pelaporCol = new TableColumn<>("Pelapor");
-        pelaporCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
+        pelaporCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
 
         TableColumn<Pengaduan, Void> aksiCol = new TableColumn<>("Aksi");
         aksiCol.setCellFactory(param -> new TableCell<Pengaduan, Void>() {
@@ -149,15 +158,16 @@ public class AdminDashboardView extends Application {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Ubah Status Pengaduan");
         dialog.setHeaderText("Pengaduan ID: " + pengaduan.getId() + "\n" +
-                             "Kategori: " + pengaduan.getKategori() + "\n" +
-                             "Lokasi: " + pengaduan.getLokasi());
+                "Kategori: " + pengaduan.getKategori() + "\n" +
+                "Lokasi: " + pengaduan.getLokasi());
 
         // Set the button types.
         ButtonType applyButtonType = new ButtonType("Terapkan", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(applyButtonType, ButtonType.CANCEL);
 
         // Create the status selection combo box.
-        ComboBox<String> statusComboBox = new ComboBox<>(FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
+        ComboBox<String> statusComboBox = new ComboBox<>(
+                FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
         statusComboBox.setValue(pengaduan.getStatus());
 
         GridPane grid = new GridPane();

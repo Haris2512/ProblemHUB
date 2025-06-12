@@ -1,0 +1,29 @@
+    [
+        {
+            "id": 1,
+            "kategori": "Jalan Rusak",
+            "lokasi": "Jl. Merdeka No. 10",
+            "deskripsi": "Aspal berlubang besar di depan rumah.",
+            "status": "Belum Diproses",
+            "fotoPath": null,
+            "pelaporUsername": "warga1"
+        },
+        {
+            "id": 2,
+            "kategori": "Lampu Mati",
+            "lokasi": "Jl. Sudirman Gg. 5",
+            "deskripsi": "Lampu penerangan jalan di gang 5 sudah mati seminggu.",
+            "status": "Diproses",
+            "fotoPath": null,
+            "pelaporUsername": "warga2"
+        },
+        {
+            "id": 3,
+            "kategori": "Saluran Tersumbat",
+            "lokasi": "Komplek Melati Blok C",
+            "deskripsi": "Saluran air mampet di depan perumahan, menyebabkan genangan.",
+            "status": "Selesai",
+            "fotoPath": null,
+            "pelaporUsername": "warga1"
+        }
+    ]

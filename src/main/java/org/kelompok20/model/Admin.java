@@ -1,19 +1,21 @@
 package org.kelompok20.model;
 
-// Untuk saat ini, Admin bisa diwakili oleh User dengan role "Admin".
-// Jika ada atribut atau perilaku khusus Admin yang tidak ada di User,
-// Anda bisa menambahkannya di sini atau extend kelas User.
+// Kelas Admin mewarisi (inherits) dari kelas User.
+// Ini adalah penerapan Inheritance, dimana Admin adalah tipe khusus dari User.
+// Admin akan memiliki semua properti (username, password, role) dan perilaku dari User,
+// serta dapat memiliki atribut atau metode khusus Admin jika diperlukan di masa depan.
+// Catatan Penting dari Ketentuan Proyek: Pewarisan dari kelas JavaFX (seperti Application)
+// tidak dihitung sebagai pilar OOP. Namun, inheritance Admin extends User ini sah dihitung.
 public class Admin extends User {
-    // Contoh jika ada atribut khusus admin
-    // private String departemen;
-
+    // Konstruktor untuk Admin dengan username dan password. Role akan otomatis diset sebagai "Admin".
     public Admin(String username, String password) {
-        super(username, password, "Admin");
-        // this.departemen = departemen;
+        super(username, password, "Admin"); // Memanggil konstruktor superclass (User)
     }
 
+    // Konstruktor default untuk Admin (jika diperlukan oleh Jackson atau framework lain).
+    // Memastikan role default-nya adalah "Admin".
     public Admin() {
         super();
-        this.setRole("Admin"); // Pastikan role default-nya Admin
+        this.setRole("Admin");
     }
 }
