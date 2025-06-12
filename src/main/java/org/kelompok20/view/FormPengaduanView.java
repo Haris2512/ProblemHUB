@@ -117,7 +117,9 @@ public class FormPengaduanView extends Application {
         Scene scene = new Scene(grid, 450, 400); // Ukuran lebih disesuaikan
         primaryStage.setScene(scene);
         primaryStage.setTitle("Form Pengaduan");
+
         primaryStage.setResizable(false); // Nonaktifkan resize untuk tampilan yang konsisten
+
         primaryStage.show();
     }
 
