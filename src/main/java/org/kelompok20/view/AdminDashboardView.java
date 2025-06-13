@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,6 +35,8 @@ public class AdminDashboardView extends Application {
     private User currentUser;
     private ComboBox<String> statusFilterCombo;
     private TableView<Pengaduan> table;
+    private Pagination pagination;
+    private static final int ROWS_PER_PAGE = 10;
 
     public AdminDashboardView(User user) {
         this.currentUser = user;
@@ -56,7 +59,8 @@ public class AdminDashboardView extends Application {
 
         HBox filterBox = new HBox(5);
         filterBox.setAlignment(Pos.CENTER_LEFT);
-        statusFilterCombo = new ComboBox<>(FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
+        statusFilterCombo = new ComboBox<>(
+                FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
         statusFilterCombo.setValue("Semua");
         statusFilterCombo.getStyleClass().add("combo-box");
         filterBox.getChildren().addAll(new Label("Filter Status:"), statusFilterCombo);
@@ -67,35 +71,40 @@ public class AdminDashboardView extends Application {
         borderPane.setTop(topContainer);
 
         table = new TableView<>();
-        table.setItems(masterPengaduanList);
         table.getStyleClass().add("table-view");
 
         TableColumn<Pengaduan, Integer> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        idCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
         idCol.setPrefWidth(40);
 
         TableColumn<Pengaduan, String> kategoriCol = new TableColumn<>("Kategori");
-        kategoriCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
+        kategoriCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
         kategoriCol.setPrefWidth(90);
 
         TableColumn<Pengaduan, String> lokasiCol = new TableColumn<>("Lokasi");
-        lokasiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
+        lokasiCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
         lokasiCol.setPrefWidth(120);
 
         TableColumn<Pengaduan, String> deskripsiCol = new TableColumn<>("Deskripsi");
-        deskripsiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
+        deskripsiCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
         deskripsiCol.setPrefWidth(180);
 
         TableColumn<Pengaduan, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
+        statusCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
         statusCol.setPrefWidth(90);
 
         TableColumn<Pengaduan, String> pelaporCol = new TableColumn<>("Pelapor");
-        pelaporCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
+        pelaporCol.setCellValueFactory(
+                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
         pelaporCol.setPrefWidth(80);
 
         TableColumn<Pengaduan, Void> aksiCol = new TableColumn<>("Aksi");
-        aksiCol.setCellFactory(param -> new TableCell<Pengaduan, Void>() {
+        aksiCol.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Ubah");
             {
                 btn.getStyleClass().add("button");
@@ -109,17 +118,13 @@ public class AdminDashboardView extends Application {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setGraphic(null);
-                } else {
-                    setGraphic(btn);
-                }
+                setGraphic(empty ? null : btn);
             }
         });
         aksiCol.setPrefWidth(80);
 
         TableColumn<Pengaduan, Void> fotoCol = new TableColumn<>("Foto");
-        fotoCol.setCellFactory(param -> new TableCell<Pengaduan, Void>() {
+        fotoCol.setCellFactory(param -> new TableCell<>() {
             private final Button btn = new Button("Lihat");
             {
                 btn.getStyleClass().add("button");
@@ -137,32 +142,30 @@ public class AdminDashboardView extends Application {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
+                if (empty || getTableView().getItems().get(getIndex()).getFotoPath() == null) {
                     setGraphic(null);
                 } else {
-                    if (getTableView().getItems().get(getIndex()).getFotoPath() != null && !getTableView().getItems().get(getIndex()).getFotoPath().isEmpty()) {
-                         setGraphic(btn);
-                    } else {
-                        setGraphic(null);
-                    }
+                    setGraphic(btn);
                 }
             }
         });
         fotoCol.setPrefWidth(80);
 
-
         table.getColumns().addAll(idCol, kategoriCol, lokasiCol, deskripsiCol, statusCol, pelaporCol, aksiCol, fotoCol);
 
-        borderPane.setCenter(table);
+        pagination = new Pagination((int) Math.ceil((double) masterPengaduanList.size() / ROWS_PER_PAGE), 0);
+        pagination.setPageFactory(this::createPage);
+
+        VBox centerContent = new VBox(10, pagination);
+        centerContent.setAlignment(Pos.CENTER);
+        borderPane.setCenter(centerContent);
 
         Button logoutButton = new Button("Logout");
         logoutButton.getStyleClass().add("button-cancel");
         BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
         borderPane.setBottom(logoutButton);
 
-        statusFilterCombo.setOnAction(e -> {
-            refreshTable();
-        });
+        statusFilterCombo.setOnAction(e -> refreshTable());
 
         logoutButton.setOnAction(e -> {
             authController.logout();
@@ -181,32 +184,35 @@ public class AdminDashboardView extends Application {
         masterPengaduanList.setAll(pengaduanService.getAllPengaduan());
 
         String currentStatusFilter = statusFilterCombo.getValue();
-        if (currentStatusFilter.equals("Semua")) {
-            table.setItems(masterPengaduanList);
-        } else {
-            ObservableList<Pengaduan> filteredList = FXCollections.observableArrayList();
-            for (Pengaduan p : masterPengaduanList) {
-                if (p.getStatus().equals(currentStatusFilter)) {
-                    filteredList.add(p);
-                }
-            }
-            table.setItems(filteredList);
+        if (!currentStatusFilter.equals("Semua")) {
+            masterPengaduanList.removeIf(p -> !p.getStatus().equals(currentStatusFilter));
         }
-        table.refresh();
+
+        pagination.setPageCount((int) Math.ceil((double) masterPengaduanList.size() / ROWS_PER_PAGE));
+        pagination.setCurrentPageIndex(0);
+        pagination.setPageFactory(this::createPage);
+    }
+
+    private Node createPage(int pageIndex) {
+        int fromIndex = pageIndex * ROWS_PER_PAGE;
+        int toIndex = Math.min(fromIndex + ROWS_PER_PAGE, masterPengaduanList.size());
+        table.setItems(FXCollections.observableArrayList(masterPengaduanList.subList(fromIndex, toIndex)));
+        return new BorderPane(table);
     }
 
     private void showStatusChangeDialog(Pengaduan pengaduan) {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Ubah Status Pengaduan");
         dialog.setHeaderText("Pengaduan ID: " + pengaduan.getId() + "\n" +
-                             "Kategori: " + pengaduan.getKategori() + "\n" +
-                             "Lokasi: " + pengaduan.getLokasi());
+                "Kategori: " + pengaduan.getKategori() + "\n" +
+                "Lokasi: " + pengaduan.getLokasi());
         dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
         ButtonType applyButtonType = new ButtonType("Terapkan", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(applyButtonType, ButtonType.CANCEL);
 
-        ComboBox<String> statusComboBox = new ComboBox<>(FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
+        ComboBox<String> statusComboBox = new ComboBox<>(
+                FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
         statusComboBox.setValue(pengaduan.getStatus());
         statusComboBox.getStyleClass().add("combo-box");
 

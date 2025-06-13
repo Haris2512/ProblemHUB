@@ -7,13 +7,11 @@ import org.kelompok20.view.LoginView;
 public class App extends Application {
     @Override
     public void start(Stage primaryStage) {
-        // Memulai aplikasi dengan menampilkan LoginView
         LoginView loginView = new LoginView();
         loginView.start(primaryStage);
     }
 
     public static void main(String[] args) {
-        // Meluncurkan aplikasi JavaFX
         launch(args);
     }
 }

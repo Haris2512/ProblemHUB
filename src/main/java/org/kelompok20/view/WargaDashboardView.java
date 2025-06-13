@@ -102,7 +102,7 @@ public class WargaDashboardView extends Application {
                     setGraphic(null);
                 } else {
                     if (getTableView().getItems().get(getIndex()).getFotoPath() != null && !getTableView().getItems().get(getIndex()).getFotoPath().isEmpty()) {
-                         setGraphic(btn);
+                        setGraphic(btn);
                     } else {
                         setGraphic(null);
                     }

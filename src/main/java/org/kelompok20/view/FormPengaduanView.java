@@ -35,6 +35,8 @@ public class FormPengaduanView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        primaryStage.centerOnScreen();
+        primaryStage.setResizable(false);
         GridPane grid = new GridPane();
         grid.setPadding(new Insets(10));
         grid.setHgap(10);
@@ -132,7 +134,7 @@ public class FormPengaduanView extends Application {
 
         cancelButton.setOnAction(e -> primaryStage.close());
 
-        Scene scene = new Scene(grid, 400, 500);
+        Scene scene = new Scene(grid, 700, 400);
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Form Pengaduan");

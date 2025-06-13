@@ -1,106 +1,127 @@
-    /* Styling umum untuk elemen root aplikasi */
-    .root {
-        -fx-font-family: "Segoe UI", sans-serif; /* Menggunakan font Segoe UI atau sans-serif generik */
-        -fx-background-color: #f4f4f4; /* Warna latar belakang abu-abu muda */
-    }
+/* ------------------------------------------
+🌟 STYLING UTAMA APLIKASI LAPORHUB 🌟
+Tema warna diambil dari logo (#994C27)
+   ------------------------------------------ */
 
-    /* Styling untuk label judul di setiap tampilan */
-    .title-label {
-        -fx-font-size: 18px; /* Ukuran font lebih besar */
-        -fx-font-weight: bold; /* Font tebal */
-        -fx-text-fill: #333333; /* Warna teks gelap */
-        -fx-padding: 10px 0; /* Padding atas dan bawah */
-    }
+/* Styling umum untuk root pane */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #fff8f4;
+    /* Putih krem lembut */
+}
 
-    /* Styling untuk semua tombol */
-    .button {
-        -fx-background-color: #4CAF50; /* Warna hijau */
-        -fx-text-fill: white; /* Warna teks putih */
-        -fx-font-weight: bold; /* Font tebal */
-        -fx-padding: 8px 15px; /* Padding di dalam tombol */
-        -fx-border-radius: 5px; /* Sudut membulat */
-        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
-        -fx-cursor: hand; /* Kursor berubah menjadi tangan saat di hover */
-    }
+/* Styling untuk judul tampilan (misal: Login Title) */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #994C27;
+    /* Coklat khas logo */
+    -fx-padding: 10px 0;
+}
 
-    /* Efek hover untuk tombol */
-    .button:hover {
-        -fx-background-color: #45a049; /* Warna hijau lebih gelap saat di hover */
-    }
+/* Styling untuk semua tombol utama */
+.button {
+    -fx-background-color: #994C27;
+    /* Coklat logo */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
 
-    /* Styling khusus untuk tombol "Cancel" atau "Logout" */
-    .button-cancel {
-        -fx-background-color: #f44336; /* Warna merah */
-    }
+/* Efek hover untuk tombol */
+.button:hover {
+    -fx-background-color: #b55b31;
+    /* Versi terang dari coklat logo */
+}
 
-    /* Efek hover untuk tombol cancel */
-    .button-cancel:hover {
-        -fx-background-color: #da190b; /* Warna merah lebih gelap saat di hover */
-    }
+/* Tombol khusus: Cancel / Logout */
+.button-cancel {
+    -fx-background-color: #f44336;
+    /* Merah untuk aksi berbahaya */
+}
 
-    /* Styling untuk TextField dan TextArea */
-    .text-field, .text-area {
-        -fx-background-color: white; /* Latar belakang putih */
-        -fx-border-color: #cccccc; /* Warna border abu-abu */
-        -fx-border-width: 1px; /* Lebar border 1px */
-        -fx-border-radius: 5px; /* Sudut membulat */
-        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
-        -fx-padding: 5px; /* Padding di dalam input */
-    }
+.button-cancel:hover {
+    -fx-background-color: #da190b;
+}
 
-    .text-area {
-        -fx-wrap-text: true; /* Teks otomatis wrap dalam TextArea */
-    }
+/* TextField & PasswordField styling */
+.text-field,
+.text-area {
+    -fx-background-color: #fffaf6;
+    /* Putih krem */
+    -fx-border-color: #b06a3d;
+    /* Border coklat muda */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-text-fill: #4e2e1e;
+    /* Warna teks coklat tua */
+}
 
-    /* Styling untuk ComboBox */
-    .combo-box {
-        -fx-background-color: white; /* Latar belakang putih */
-        -fx-border-color: #cccccc; /* Warna border abu-abu */
-        -fx-border-width: 1px; /* Lebar border 1px */
-        -fx-border-radius: 5px; /* Sudut membulat */
-        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
-    }
+/* Styling untuk TextArea yang bisa wrap teks */
+.text-area {
+    -fx-wrap-text: true;
+}
 
-    /* Styling untuk TableView */
-    .table-view {
-        -fx-background-color: white; /* Latar belakang putih */
-        -fx-border-color: #cccccc; /* Warna border abu-abu */
-        -fx-border-width: 1px; /* Lebar border 1px */
-        -fx-border-radius: 5px; /* Sudut membulat */
-        -fx-background-radius: 5px; /* Sudut membulat pada latar belakang */
-    }
+/* ComboBox (misal: pilih peran) */
+.combo-box {
+    -fx-background-color: #fffaf6;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #4e2e1e;
+}
 
-    /* Styling untuk latar belakang header kolom tabel */
-    .table-view .column-header-background {
-        -fx-background-color: #e0e0e0; /* Warna abu-abu terang */
-    }
+/* TableView (misal daftar pengaduan) */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
 
-    /* Styling untuk teks di header kolom tabel */
-    .table-view .column-header {
-        -fx-font-weight: bold; /* Font tebal */
-    }
+/* Header kolom tabel */
+.table-view .column-header-background {
+    -fx-background-color: #f0e0d6;
+    /* Krem */
+}
 
-    /* Styling untuk sel-sel dalam tabel */
-    .table-view .table-cell {
-        -fx-padding: 5px;
-    }
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #994C27;
+}
 
-    /* Styling khusus untuk panel dialog (popup) */
-    .dialog-pane {
-        -fx-background-color: #ffffff; /* Latar belakang putih */
-        -fx-border-color: #cccccc; /* Warna border abu-abu */
-        -fx-border-width: 1px;
-        -fx-padding: 15px;
-    }
+.table-view .table-cell {
+    -fx-padding: 5px;
+    -fx-text-fill: #4e2e1e;
+}
 
-    /* Styling untuk panel header di dialog */
-    .dialog-pane .header-panel {
-        -fx-background-color: #e0e0e0;
-        -fx-padding: 10px;
-    }
+/* Dialog (popup input username/password saat registrasi) */
+.dialog-pane {
+    -fx-background-color: #fff8f4;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+}
 
-    /* Styling untuk konten di dialog */
-    .dialog-pane .content {
-        -fx-padding: 10px 0;
-    }
-    
+.dialog-pane .header-panel {
+    -fx-background-color: #f0e0d6;
+    -fx-padding: 10px;
+}
+
+.dialog-pane .content {
+    -fx-padding: 10px 0;
+}
+
+/* Tooltip dan Placeholder */
+.tooltip {
+    -fx-background-color: #b55b31;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
