@@ -38,13 +38,25 @@ public class AuthController {
     }
 
     public boolean register(String username, String password, String role) {
+
         List<User> users = userDataManager.loadData();
+
+        if (!role.equalsIgnoreCase("Warga")) {
+            return false; // Gagal kalau bukan Warga
+        }
+
+
+        // Cek apakah username sudah ada
+
         boolean usernameExists = users.stream().anyMatch(u -> u.getUsername().equals(username));
         if (usernameExists) {
             return false;
         }
 
+
+        User newUser = new User(username, password, "Warga");
         User newUser = new User(username, password, role);
+
         users.add(newUser);
         userDataManager.saveData(users);
         return true;

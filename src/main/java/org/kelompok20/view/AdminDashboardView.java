@@ -177,6 +177,9 @@ public class AdminDashboardView extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dashboard Admin");
+
+        primaryStage.setResizable(false);
+
         primaryStage.show();
     }
 
@@ -234,6 +237,30 @@ public class AdminDashboardView extends Application {
 
         Optional<String> result = dialog.showAndWait();
 
+
+       result.ifPresent(newStatus -> {
+            if (pengaduanController.updatePengaduanStatus(pengaduan.getId(), newStatus)) {
+            // Perbarui ObservableList
+                for (int i = 0; i < masterPengaduanList.size(); i++) {
+                    if (masterPengaduanList.get(i).getId() == pengaduan.getId()) {
+                        masterPengaduanList.get(i).setStatus(newStatus);
+                break;
+            }
+        }
+        showAlert("Sukses", "Status pengaduan berhasil diubah menjadi: " + newStatus);
+        
+        // Filter ulang jika ada filter aktif
+        filterTable(table, statusFilterCombo.getValue());
+
+        // Refresh tabel untuk menampilkan perubahan
+        table.refresh();
+
+    } else {
+        showAlert("Gagal", "Gagal mengubah status pengaduan.");
+    }
+});
+
+
         result.ifPresent(newStatus -> {
             if (pengaduanService.updatePengaduanStatus(pengaduan.getId(), newStatus)) {
                 showAlert("Sukses", "Status pengaduan berhasil diubah menjadi: " + newStatus);
@@ -242,6 +269,7 @@ public class AdminDashboardView extends Application {
                 showAlert("Gagal", "Gagal mengubah status pengaduan.");
             }
         });
+
     }
 
     private void showImageDialog(String imagePath) {

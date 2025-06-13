@@ -191,6 +191,7 @@ public class LoginView extends Application {
                         if (authController.register(resultUsername.get(), newPassword, "Warga")) {
                             showAlert("Sukses", "Registrasi berhasil! Silakan login.");
                         } else {
+
                             showAlert("Gagal", "Registrasi gagal! Username '" + resultUsername.get() + "' sudah terdaftar.");
                         }
                     }
@@ -201,6 +202,27 @@ public class LoginView extends Application {
         Scene loginScene = new Scene(grid, 400, 400);
         loginScene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(loginScene);
+
+                            showAlert("Gagal", "Username sudah digunakan. Silakan pilih username lain.");
+
+                            showAlert("Gagal", "Registrasi gagal! Username mungkin sudah ada.");
+
+                        }
+                    }
+                });
+            }
+        });
+
+        // Scene dan Stage
+        Scene scene = new Scene(grid, 380, 250); // Ukuran disesuaikan
+        primaryStage.setScene(scene);
+        primaryStage.setTitle("Sistem Pengaduan - Login");
+
+        primaryStage.setResizable(false); // Nonaktifkan resize
+
+
+        primaryStage.show();
+
     }
 
     private void showAlert(String title, String message) {

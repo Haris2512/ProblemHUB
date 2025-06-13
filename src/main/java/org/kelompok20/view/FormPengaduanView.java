@@ -138,6 +138,9 @@ public class FormPengaduanView extends Application {
         scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Form Pengaduan");
+
+        primaryStage.setResizable(false); // Nonaktifkan resize untuk tampilan yang konsisten
+
         primaryStage.show();
     }
 
