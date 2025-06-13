@@ -1,7 +1,5 @@
 package org.kelompok20.view;
 
-import java.util.Optional;
-
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -9,6 +7,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -16,96 +16,98 @@ import javafx.stage.Stage;
 import javafx.scene.layout.GridPane;
 
 import org.kelompok20.controller.PengaduanController;
-import org.kelompok20.controller.AuthController; // Untuk logout
+import org.kelompok20.controller.AuthController;
 import org.kelompok20.model.Pengaduan;
 import org.kelompok20.model.User;
+import org.kelompok20.utils.FileHandler;
+import org.kelompok20.service.IPengaduanService;
+
+import java.io.File;
+import java.util.Optional;
 
 public class AdminDashboardView extends Application {
 
-    private PengaduanController pengaduanController = new PengaduanController();
-    private AuthController authController = new AuthController(); // Instance AuthController
+    private IPengaduanService pengaduanService = new PengaduanController();
+    private AuthController authController = new AuthController();
+    private FileHandler fileHandler = new FileHandler();
     private ObservableList<Pengaduan> masterPengaduanList;
-    private User currentUser; // Untuk menyimpan user yang sedang login
-    private ComboBox<String> statusFilterCombo; // Deklarasi di scope kelas
+    private User currentUser;
+    private ComboBox<String> statusFilterCombo;
+    private TableView<Pengaduan> table;
 
-    // Konstruktor untuk menerima user yang login
     public AdminDashboardView(User user) {
         this.currentUser = user;
     }
 
-    // Default constructor diperlukan karena Application class memanggil konstruktor
-    // tanpa argumen
     public AdminDashboardView() {
-        // Jika dipanggil tanpa argumen, asumsi tidak ada user yang login atau perlu
-        // di-handle secara berbeda
-        // Ini mungkin terjadi jika main() dipanggil langsung
+        this.currentUser = new User("admin_test", "password_test", "Admin");
     }
 
     @Override
     public void start(Stage primaryStage) {
-        // Inisialisasi data pengaduan
-        masterPengaduanList = FXCollections.observableArrayList(pengaduanController.getAllPengaduan());
+        masterPengaduanList = FXCollections.observableArrayList(pengaduanService.getAllPengaduan());
 
         BorderPane borderPane = new BorderPane();
-        borderPane.setPadding(new Insets(20));
+        borderPane.setPadding(new Insets(10));
+        borderPane.getStyleClass().add("root");
 
         Label titleLabel = new Label("Dashboard Admin");
-        titleLabel.setStyle("-fx-font-weight: bold; -fx-font-size: 16px;");
+        titleLabel.getStyleClass().add("title-label");
 
-        HBox filterBox = new HBox(10);
-        statusFilterCombo = new ComboBox<>(
-                FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
-        statusFilterCombo.setValue("Semua"); // Default selected value
+        HBox filterBox = new HBox(5);
+        filterBox.setAlignment(Pos.CENTER_LEFT);
+        statusFilterCombo = new ComboBox<>(FXCollections.observableArrayList("Semua", "Belum Diproses", "Diproses", "Selesai"));
+        statusFilterCombo.setValue("Semua");
+        statusFilterCombo.getStyleClass().add("combo-box");
         filterBox.getChildren().addAll(new Label("Filter Status:"), statusFilterCombo);
 
-        // Menggabungkan titleLabel dan filterBox dalam VBox untuk bagian TOP
-        VBox topContainer = new VBox(10); // Spasi vertikal 10px
+        VBox topContainer = new VBox(5);
         topContainer.getChildren().addAll(titleLabel, filterBox);
-        topContainer.setAlignment(Pos.CENTER); // Pusatkan konten di VBox
-
+        topContainer.setAlignment(Pos.CENTER);
         borderPane.setTop(topContainer);
 
-        TableView<Pengaduan> table = new TableView<>();
-        table.setItems(masterPengaduanList); // Gunakan ObservableList Pengaduan
+        table = new TableView<>();
+        table.setItems(masterPengaduanList);
+        table.getStyleClass().add("table-view");
 
-        // Definisi Kolom
         TableColumn<Pengaduan, Integer> idCol = new TableColumn<>("ID");
-        idCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        idCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleIntegerProperty(cellData.getValue().getId()).asObject());
+        idCol.setPrefWidth(40);
 
         TableColumn<Pengaduan, String> kategoriCol = new TableColumn<>("Kategori");
-        kategoriCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
+        kategoriCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getKategori()));
+        kategoriCol.setPrefWidth(90);
 
         TableColumn<Pengaduan, String> lokasiCol = new TableColumn<>("Lokasi");
-        lokasiCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
+        lokasiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getLokasi()));
+        lokasiCol.setPrefWidth(120);
 
         TableColumn<Pengaduan, String> deskripsiCol = new TableColumn<>("Deskripsi");
-        deskripsiCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
+        deskripsiCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getDeskripsi()));
+        deskripsiCol.setPrefWidth(180);
 
         TableColumn<Pengaduan, String> statusCol = new TableColumn<>("Status");
-        statusCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
+        statusCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getStatus()));
+        statusCol.setPrefWidth(90);
 
         TableColumn<Pengaduan, String> pelaporCol = new TableColumn<>("Pelapor");
-        pelaporCol.setCellValueFactory(
-                cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
+        pelaporCol.setCellValueFactory(cellData -> new javafx.beans.property.SimpleStringProperty(cellData.getValue().getPelaporUsername()));
+        pelaporCol.setPrefWidth(80);
 
         TableColumn<Pengaduan, Void> aksiCol = new TableColumn<>("Aksi");
         aksiCol.setCellFactory(param -> new TableCell<Pengaduan, Void>() {
-            private final Button btn = new Button("Ubah Status");
-
+            private final Button btn = new Button("Ubah");
             {
+                btn.getStyleClass().add("button");
+                btn.setPrefWidth(70);
                 btn.setOnAction(event -> {
                     Pengaduan pengaduan = getTableView().getItems().get(getIndex());
-                    showStatusChangeDialog(table, pengaduan); // Pass table to dialog
+                    showStatusChangeDialog(pengaduan);
                 });
             }
 
             @Override
-            public void updateItem(Void item, boolean empty) {
+            protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty) {
                     setGraphic(null);
@@ -114,72 +116,109 @@ public class AdminDashboardView extends Application {
                 }
             }
         });
+        aksiCol.setPrefWidth(80);
 
-        table.getColumns().addAll(idCol, kategoriCol, lokasiCol, deskripsiCol, statusCol, pelaporCol, aksiCol);
+        TableColumn<Pengaduan, Void> fotoCol = new TableColumn<>("Foto");
+        fotoCol.setCellFactory(param -> new TableCell<Pengaduan, Void>() {
+            private final Button btn = new Button("Lihat");
+            {
+                btn.getStyleClass().add("button");
+                btn.setPrefWidth(70);
+                btn.setOnAction(event -> {
+                    Pengaduan pengaduan = getTableView().getItems().get(getIndex());
+                    if (pengaduan.getFotoPath() != null && !pengaduan.getFotoPath().isEmpty()) {
+                        showImageDialog(pengaduan.getFotoPath());
+                    } else {
+                        showAlert("Info", "Tidak ada foto untuk pengaduan ini.");
+                    }
+                });
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) {
+                    setGraphic(null);
+                } else {
+                    if (getTableView().getItems().get(getIndex()).getFotoPath() != null && !getTableView().getItems().get(getIndex()).getFotoPath().isEmpty()) {
+                         setGraphic(btn);
+                    } else {
+                        setGraphic(null);
+                    }
+                }
+            }
+        });
+        fotoCol.setPrefWidth(80);
+
+
+        table.getColumns().addAll(idCol, kategoriCol, lokasiCol, deskripsiCol, statusCol, pelaporCol, aksiCol, fotoCol);
 
         borderPane.setCenter(table);
 
         Button logoutButton = new Button("Logout");
+        logoutButton.getStyleClass().add("button-cancel");
         BorderPane.setAlignment(logoutButton, Pos.BOTTOM_RIGHT);
         borderPane.setBottom(logoutButton);
 
-        // Event handler untuk filter status
         statusFilterCombo.setOnAction(e -> {
-            filterTable(table, statusFilterCombo.getValue());
+            refreshTable();
         });
 
         logoutButton.setOnAction(e -> {
-            authController.logout(); // Logout user dari controller
+            authController.logout();
             primaryStage.close();
             new LoginView().start(new Stage());
         });
 
-        Scene scene = new Scene(borderPane, 800, 500); // Ukuran jendela lebih besar
+        Scene scene = new Scene(borderPane, 850, 450);
+        scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.setTitle("Dashboard Admin");
         primaryStage.show();
     }
 
-    private void filterTable(TableView<Pengaduan> table, String status) {
-        if (status.equals("Semua")) {
+    private void refreshTable() {
+        masterPengaduanList.setAll(pengaduanService.getAllPengaduan());
+
+        String currentStatusFilter = statusFilterCombo.getValue();
+        if (currentStatusFilter.equals("Semua")) {
             table.setItems(masterPengaduanList);
         } else {
             ObservableList<Pengaduan> filteredList = FXCollections.observableArrayList();
             for (Pengaduan p : masterPengaduanList) {
-                if (p.getStatus().equals(status)) {
+                if (p.getStatus().equals(currentStatusFilter)) {
                     filteredList.add(p);
                 }
             }
             table.setItems(filteredList);
         }
+        table.refresh();
     }
 
-    private void showStatusChangeDialog(TableView<Pengaduan> table, Pengaduan pengaduan) {
+    private void showStatusChangeDialog(Pengaduan pengaduan) {
         Dialog<String> dialog = new Dialog<>();
         dialog.setTitle("Ubah Status Pengaduan");
         dialog.setHeaderText("Pengaduan ID: " + pengaduan.getId() + "\n" +
-                "Kategori: " + pengaduan.getKategori() + "\n" +
-                "Lokasi: " + pengaduan.getLokasi());
+                             "Kategori: " + pengaduan.getKategori() + "\n" +
+                             "Lokasi: " + pengaduan.getLokasi());
+        dialog.getDialogPane().getStyleClass().add("dialog-pane");
 
-        // Set the button types.
         ButtonType applyButtonType = new ButtonType("Terapkan", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(applyButtonType, ButtonType.CANCEL);
 
-        // Create the status selection combo box.
-        ComboBox<String> statusComboBox = new ComboBox<>(
-                FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
+        ComboBox<String> statusComboBox = new ComboBox<>(FXCollections.observableArrayList("Belum Diproses", "Diproses", "Selesai"));
         statusComboBox.setValue(pengaduan.getStatus());
+        statusComboBox.getStyleClass().add("combo-box");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
-        grid.setPadding(new Insets(20, 150, 10, 10));
+        grid.setPadding(new Insets(10));
         grid.add(new Label("Status Baru:"), 0, 0);
         grid.add(statusComboBox, 1, 0);
 
         dialog.getDialogPane().setContent(grid);
 
-        // Convert the result to a status string when the apply button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == applyButtonType) {
                 return statusComboBox.getValue();
@@ -190,22 +229,36 @@ public class AdminDashboardView extends Application {
         Optional<String> result = dialog.showAndWait();
 
         result.ifPresent(newStatus -> {
-            if (pengaduanController.updatePengaduanStatus(pengaduan.getId(), newStatus)) {
-                // Perbarui ObservableList agar TableView juga terupdate
-                // Cari pengaduan di master list dan update statusnya
-                for (int i = 0; i < masterPengaduanList.size(); i++) {
-                    if (masterPengaduanList.get(i).getId() == pengaduan.getId()) {
-                        masterPengaduanList.get(i).setStatus(newStatus);
-                        break;
-                    }
-                }
+            if (pengaduanService.updatePengaduanStatus(pengaduan.getId(), newStatus)) {
                 showAlert("Sukses", "Status pengaduan berhasil diubah menjadi: " + newStatus);
-                // Setelah update, filter ulang tabel jika ada filter aktif
-                filterTable(table, statusFilterCombo.getValue()); // Panggil filterTable dengan table
+                refreshTable();
             } else {
                 showAlert("Gagal", "Gagal mengubah status pengaduan.");
             }
         });
+    }
+
+    private void showImageDialog(String imagePath) {
+        Stage imageStage = new Stage();
+        BorderPane imagePane = new BorderPane();
+        ImageView imageView = new ImageView();
+        imageView.setFitWidth(400);
+        imageView.setPreserveRatio(true);
+
+        File imageFile = fileHandler.getFile(imagePath);
+        if (imageFile != null && imageFile.exists()) {
+            Image image = new Image(imageFile.toURI().toString());
+            imageView.setImage(image);
+        } else {
+            showAlert("Error", "File gambar tidak ditemukan: " + imagePath);
+            return;
+        }
+
+        imagePane.setCenter(imageView);
+        Scene imageScene = new Scene(imagePane, 420, 420);
+        imageStage.setScene(imageScene);
+        imageStage.setTitle("Foto Pengaduan");
+        imageStage.show();
     }
 
     private void showAlert(String title, String message) {
@@ -214,5 +267,9 @@ public class AdminDashboardView extends Application {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 }
