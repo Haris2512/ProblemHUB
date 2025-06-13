@@ -9,49 +9,42 @@ import java.nio.file.StandardCopyOption;
 
 public class FileHandler {
 
-    private static final String UPLOAD_DIR = "uploads"; // Folder untuk menyimpan file
+    private static final String UPLOAD_DIR = "data/uploads";
 
     public FileHandler() {
-        // Pastikan folder uploads ada
         File uploadFolder = new File(UPLOAD_DIR);
         if (!uploadFolder.exists()) {
-            uploadFolder.mkdirs(); // Buat folder jika belum ada
+            uploadFolder.mkdirs();
         }
     }
 
-    /**
-     * Menyimpan file yang diunggah ke direktori aplikasi.
-     * @param sourceFile File sumber yang diungunggah
-     * @return Path absolut dari file yang disimpan, atau null jika gagal
-     */
     public String saveFile(File sourceFile) {
         if (sourceFile == null) {
             return null;
         }
 
         try {
-            // Buat nama file unik untuk menghindari overwrite
             String fileName = System.currentTimeMillis() + "_" + sourceFile.getName();
             Path destinationPath = Paths.get(UPLOAD_DIR, fileName);
 
             Files.copy(sourceFile.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-            return destinationPath.toAbsolutePath().toString(); // Mengembalikan path absolut
+            return Paths.get(UPLOAD_DIR, fileName).toString();
         } catch (IOException e) {
             System.err.println("Gagal menyimpan file: " + e.getMessage());
             return null;
         }
     }
 
-    /**
-     * Mendapatkan objek File dari path yang disimpan.
-     * @param filePath Path file yang disimpan
-     * @return Objek File, atau null jika file tidak ditemukan
-     */
     public File getFile(String filePath) {
         if (filePath == null || filePath.isEmpty()) {
             return null;
         }
-        File file = new File(filePath);
+        Path fullPath = Paths.get(filePath);
+        if (!fullPath.isAbsolute() && !fullPath.startsWith(UPLOAD_DIR)) {
+            fullPath = Paths.get(UPLOAD_DIR, filePath);
+        }
+
+        File file = fullPath.toFile();
         return file.exists() ? file : null;
     }
 }
