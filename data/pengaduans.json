@@ -1,0 +1,65 @@
+[ {
+  "id" : 1,
+  "kategori" : "Lampu Mati",
+  "lokasi" : "wds",
+  "deskripsi" : "sxs",
+  "status" : "Selesai",
+  "fotoPath" : null,
+  "pelaporUsername" : "haris"
+}, {
+  "id" : 2,
+  "kategori" : "Saluran Tersumbat",
+  "lokasi" : "Kos Baba Perintis Kemerdekaan 4",
+  "deskripsi" : "Sudah 3 hari saluran air tersumbat dan menyebabkan banjir kecil di halaman rumah. Air bau dan berwarna hitam. Mohon bantuan untuk membersihkannya.",
+  "status" : "Selesai",
+  "fotoPath" : "data\\uploads\\banjir.jpeg",
+  "pelaporUsername" : "hariss"
+}, {
+  "id" : 3,
+  "kategori" : "Jalan Rusak",
+  "lokasi" : "Pintu 0 UNHAS",
+  "deskripsi" : "Perbaiki jalanan nya tolong saya sudah 3 kali jatuh disitu",
+  "status" : "Diproses",
+  "fotoPath" : "data\\uploads\\1749823822464_577cb671-2856-47b3-8441-e175ead77b40.jpeg",
+  "pelaporUsername" : "hariss"
+}, {
+  "id" : 4,
+  "kategori" : "Lainnya",
+  "lokasi" : "Balikpapan Baru",
+  "deskripsi" : "Kebakaran di rumah tetangga saya akibat gas yang meledak ",
+  "status" : "Selesai",
+  "fotoPath" : "data\\uploads\\1749823987821_kebakaran.jpeg",
+  "pelaporUsername" : "naailah"
+}, {
+  "id" : 5,
+  "kategori" : "Lainnya",
+  "lokasi" : "Kos Anjas Jalan Sahabat",
+  "deskripsi" : "iSampah tidak diangkut lebih dari seminggu. Sudah mengeluarkan bau busuk dan mengundang lalat.",
+  "status" : "Belum Diproses",
+  "fotoPath" : "data\\uploads\\1749824148824_sampah yang berceceran akibat tempat sampah yang sudah penuh.jpeg",
+  "pelaporUsername" : "naailah"
+}, {
+  "id" : 6,
+  "kategori" : "Jalan Rusak",
+  "lokasi" : "BTP",
+  "deskripsi" : " Aspal mengelupas dan ada lubang besar di tengah jalan. Sering menyebabkan pengendara motor terjatuh. Ini juga akibat banyak pengendara mobi besar yang lalu lalang",
+  "status" : "Belum Diproses",
+  "fotoPath" : null,
+  "pelaporUsername" : "velin"
+}, {
+  "id" : 7,
+  "kategori" : "Lampu Mati",
+  "lokasi" : "Perumahan Mutiara Gading, Daya",
+  "deskripsi" : "Air sudah satu minggu tidak mengalir",
+  "status" : "Belum Diproses",
+  "fotoPath" : null,
+  "pelaporUsername" : "velin"
+}, {
+  "id" : 8,
+  "kategori" : "Jalan Rusak",
+  "lokasi" : "pk 7",
+  "deskripsi" : "lubang",
+  "status" : "Belum Diproses",
+  "fotoPath" : null,
+  "pelaporUsername" : "Haris"
+} ]

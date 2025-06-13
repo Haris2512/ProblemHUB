@@ -1,0 +1,127 @@
+/* ------------------------------------------
+🌟 STYLING UTAMA APLIKASI LAPORHUB 🌟
+Tema warna diambil dari logo (#994C27)
+   ------------------------------------------ */
+
+/* Styling umum untuk root pane */
+.root {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-background-color: #fff8f4;
+    /* Putih krem lembut */
+}
+
+/* Styling untuk judul tampilan (misal: Login Title) */
+.title-label {
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #994C27;
+    /* Coklat khas logo */
+    -fx-padding: 10px 0;
+}
+
+/* Styling untuk semua tombol utama */
+.button {
+    -fx-background-color: #994C27;
+    /* Coklat logo */
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 15px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-cursor: hand;
+}
+
+/* Efek hover untuk tombol */
+.button:hover {
+    -fx-background-color: #b55b31;
+    /* Versi terang dari coklat logo */
+}
+
+/* Tombol khusus: Cancel / Logout */
+.button-cancel {
+    -fx-background-color: #f44336;
+    /* Merah untuk aksi berbahaya */
+}
+
+.button-cancel:hover {
+    -fx-background-color: #da190b;
+}
+
+/* TextField & PasswordField styling */
+.text-field,
+.text-area {
+    -fx-background-color: #fffaf6;
+    /* Putih krem */
+    -fx-border-color: #b06a3d;
+    /* Border coklat muda */
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-padding: 5px;
+    -fx-text-fill: #4e2e1e;
+    /* Warna teks coklat tua */
+}
+
+/* Styling untuk TextArea yang bisa wrap teks */
+.text-area {
+    -fx-wrap-text: true;
+}
+
+/* ComboBox (misal: pilih peran) */
+.combo-box {
+    -fx-background-color: #fffaf6;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-text-fill: #4e2e1e;
+}
+
+/* TableView (misal daftar pengaduan) */
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
+
+/* Header kolom tabel */
+.table-view .column-header-background {
+    -fx-background-color: #f0e0d6;
+    /* Krem */
+}
+
+.table-view .column-header {
+    -fx-font-weight: bold;
+    -fx-text-fill: #994C27;
+}
+
+.table-view .table-cell {
+    -fx-padding: 5px;
+    -fx-text-fill: #4e2e1e;
+}
+
+/* Dialog (popup input username/password saat registrasi) */
+.dialog-pane {
+    -fx-background-color: #fff8f4;
+    -fx-border-color: #b06a3d;
+    -fx-border-width: 1px;
+    -fx-padding: 15px;
+}
+
+.dialog-pane .header-panel {
+    -fx-background-color: #f0e0d6;
+    -fx-padding: 10px;
+}
+
+.dialog-pane .content {
+    -fx-padding: 10px 0;
+}
+
+/* Tooltip dan Placeholder */
+.tooltip {
+    -fx-background-color: #b55b31;
+    -fx-text-fill: white;
+    -fx-font-size: 12px;
+}
