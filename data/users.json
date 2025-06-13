@@ -18,4 +18,8 @@
   "username" : "haris",
   "password" : "123",
   "role" : "Warga"
+}, {
+  "username" : "Haris",
+  "password" : "haris123",
+  "role" : "Warga"
 } ]
